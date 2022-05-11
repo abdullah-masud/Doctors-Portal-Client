@@ -1,7 +1,8 @@
 import React from 'react';
 import Banner from './Banner';
-import GetStarted from './GetStarted';
+import DentalCare from './DentalCare';
 import Info from './Info';
+import MakeAppointment from './MakeAppointment';
 import Services from './Services';
 
 const Home = () => {
@@ -10,7 +11,8 @@ const Home = () => {
             <Banner />
             <Info />
             <Services />
-            <GetStarted />
+            <DentalCare />
+            <MakeAppointment />
         </div>
     );
 };

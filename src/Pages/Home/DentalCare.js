@@ -1,7 +1,7 @@
 import React from 'react';
 import treatment from '../../assets/images/treatment.png'
 
-const GetStarted = () => {
+const DentalCare = () => {
     return (
         <div class="hero min-h-screen bg-base-100 px-6">
             <div class="hero-content flex-col lg:flex-row">
@@ -16,4 +16,4 @@ const GetStarted = () => {
     );
 };
 
-export default GetStarted;
+export default DentalCare;

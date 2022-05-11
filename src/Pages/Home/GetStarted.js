@@ -3,7 +3,7 @@ import treatment from '../../assets/images/treatment.png'
 
 const GetStarted = () => {
     return (
-        <div class="hero min-h-screen bg-base-100 px-12">
+        <div class="hero min-h-screen bg-base-100 px-6">
             <div class="hero-content flex-col lg:flex-row">
                 <img src={treatment} class="max-w-sm rounded-lg shadow-2xl w-full" />
                 <div className='lg:ml-28'>

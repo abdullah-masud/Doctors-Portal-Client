@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import React, { useEffect, useRef } from 'react';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, getValues } = useForm();
 
     const [signInWithEmailAndPassword, emailUser, emailLoading, emailError] = useSignInWithEmailAndPassword(auth);
+
+    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
 
     let signInerror;
     const navigate = useNavigate();
@@ -22,7 +26,7 @@ const Login = () => {
         }
     }, [googleUser, emailUser, from, navigate])
 
-    if (emailLoading || googleLoading) {
+    if (emailLoading || googleLoading || sending) {
         return <Loading />
     }
 
@@ -30,10 +34,22 @@ const Login = () => {
         signInerror = <p className='text-red-500'><small>{emailError?.message || googleError?.message}</small></p>
     }
 
+
     const onSubmit = data => {
         console.log(data);
         signInWithEmailAndPassword(data.email, data.password)
     };
+
+    const resetPassword = async () => {
+        const email = getValues('email')
+        if (email) {
+            await sendPasswordResetEmail(email)
+            toast('Email Sent')
+        }
+        else {
+            toast("Please Enter Email Address")
+        }
+    }
 
     return (
         <div className='flex justify-center items-center h-screen max-w-7xl mx-auto'>
@@ -97,12 +113,16 @@ const Login = () => {
                         {signInerror}
                         <input className='btn w-full max-w-xs' value="Login" type="submit" />
                     </form>
-                    <p className='text-center'><small>New to Doctors Portal? <Link className='text-secondary' to='/signup'>Create New Account</Link></small></p>
+                    <p className='text-center'>
+                        <button onClick={resetPassword} className='btn-link text-accent text-xs font-semibold uppercase'>Forgot Password ?</button>
+                    </p>
+                    <p className='text-center text-accent font-semibold'><small>New to Doctors Portal? <Link className='text-secondary' to='/signup'>Create New Account</Link></small></p>
                     <div className="divider">OR</div>
                     <button
                         onClick={() => signInWithGoogle()}
                         className="btn btn-outline"
                     >Continue with Google</button>
+                    <ToastContainer />
                 </div>
             </div>
         </div>

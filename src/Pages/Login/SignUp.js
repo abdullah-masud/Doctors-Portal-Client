@@ -9,7 +9,7 @@ const SignUp = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const [createUserWithEmailAndPassword, emailUser, emailLoading, emailError,] = useCreateUserWithEmailAndPassword(auth);
+    const [createUserWithEmailAndPassword, emailUser, emailLoading, emailError,] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
@@ -121,7 +121,7 @@ const SignUp = () => {
                         {signInerror}
                         <input className='btn w-full max-w-xs' value="Sign Up" type="submit" />
                     </form>
-                    <p className='text-center'><small>Already have an account? <Link className='text-secondary' to='/login'>Please Login</Link></small></p>
+                    <p className='text-center  text-accent font-semibold'><small>Already have an account? <Link className='text-secondary' to='/login'>Please Login</Link></small></p>
                     <div className="divider">OR</div>
                     <button
                         onClick={() => signInWithGoogle()}

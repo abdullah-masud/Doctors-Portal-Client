@@ -2,6 +2,7 @@ import React from 'react';
 import { format } from 'date-fns';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import { toast } from 'react-toastify';
 
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
@@ -22,8 +23,27 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             patientEmail: user.email,
             patientPhone: event.target.phone.value,
         }
-        // to close the modal
-        setTreatment(null)
+
+        fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toast(`Appoint is set, ${formattedDate} at ${slot}`)
+                }
+                else {
+                    toast.err(`Already have an appointment on ${data.booking?.date} at ${data.booking?.slot}`)
+                }
+                // to close the modal
+                setTreatment(null)
+            })
+
+
     }
 
     return (

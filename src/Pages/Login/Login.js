@@ -4,8 +4,8 @@ import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
 
 const Login = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
@@ -122,7 +122,7 @@ const Login = () => {
                         onClick={() => signInWithGoogle()}
                         className="btn btn-outline"
                     >Continue with Google</button>
-                    <ToastContainer />
+
                 </div>
             </div>
         </div>

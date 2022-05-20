@@ -12,7 +12,7 @@ const MyAppointments = () => {
 
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/bookings?patientEmail=${user.email}`, {
+            fetch(`https://glacial-earth-80105.herokuapp.com/bookings?patientEmail=${user.email}`, {
                 method: 'GET',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('accessToken')}`
